@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home - v 0.1</title>
+
+    <link rel="stylesheet" href="../static/styles/home.css" th:href="@{/styles/home.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="shortcut icon"  href="../static/media/favicon.ico" th:href="@{/media/favicon.ico}"type="image/x-icon">
+
+</head>
+<body>
+<nav>
+    <ul>
+        <li>
+            <a href="" class="logo">
+                <img alt="../static/media/man.png" th:href="@{/media/man.png}">
+                <span class="nav-item">Hei<span th:text="${username}"></span></span>
+            </a>
+        </li>
+        <li><a href="/home">
+            <i class="fas fa-home"></i>
+            <span class="nav-item">Hjem</span>
+        </a></li>
+        <li><a href="/home/new-entry">
+            <i class="fas fa-chart-bar"></i>
+            <span class="nav-item">Ny timeføring</span>
+        </a></li>
+        <li><a href="#">
+            <i class="fas fa-skiing"></i>
+            <span class="nav-item">Endre timeføring</span>
+        </a></li>
+        <li><a href="#">
+            <i class="fas fa-user"></i>
+            <span class="nav-item">Tom</span>
+        </a></li>
+        <li th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
+            <a href="/home/settings">
+                <i class="fas fa-cog"></i>
+                <span class="nav-item">Settings</span>
+            </a></li>
+        <li><a href="/logout" class="logout">
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="nav-item">Logg ut</span>
+        </a></li>
+    </ul>
+</nav>
+
+<div class="container">
+    <div class="box">
+        <h2>Dette året</h2>
+        <p id="yearlySummary" th:text="${yearlySummary} + ' t'"></p>
+    </div>
+    <div class="box">
+        <h2>Denne måneden</h2>
+        <p id="monthlySummary" th:text="${monthlySummary} + ' t'"></p>
+    </div>
+    <div class="box">
+        <h2>I dag</h2>
+        <p id="dailySummary" th:text="${dailySummary} + ' t'"></p>
+    </div>
+</div>
+
+</body>
+</html>

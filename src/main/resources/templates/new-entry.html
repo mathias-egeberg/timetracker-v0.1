@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ny registrering</title>
+
+  <link rel="stylesheet" href="../static/styles/new-entry.css" th:href="@{/styles/new-entry.css}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="shortcut icon"  href="../static/media/favicon.ico" th:href="@{/media/favicon.ico}"type="image/x-icon">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="../static/scripts/new-entry.js" th:src="@{/scripts/new-entry.js}"></script>
+
+
+</head>
+    <body>
+          <nav>
+            <ul>
+              <li>
+                <a href="" class="logo">
+                  <img th:src="${picture}" alt="">
+                  <span class="nav-item">Hei<span th:text="${username}"></span></span>
+                </a>
+              </li>
+              <li><a href="/home">
+                <i class="fas fa-home"></i>
+                <span class="nav-item">Hjem</span>
+              </a></li>
+              <li><a href="/home/new-entry">
+                <i class="fas fa-chart-bar"></i>
+                <span class="nav-item">Ny timeføring</span>
+              </a></li>
+              <li><a href="#">
+                <i class="fas fa-skiing"></i>
+                <span class="nav-item">Endre timeføring</span>
+              </a></li>
+              <li><a href="#">
+                <i class="fas fa-user"></i>
+                <span class="nav-item">Tom</span>
+              </a></li>
+              <li th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
+                <a href="/home/settings">
+                  <i class="fas fa-cog"></i>
+                  <span class="nav-item">Settings</span>
+                </a></li>
+              <li><a href="/logout" class="logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="nav-item">Logg ut</span>
+              </a></li>
+            </ul>
+          </nav>
+
+          <div class="container">
+            <form class="time-entry-form" th:action="@{/home/save}" th:object="${timeEntry}" method="post">
+              <h2>Log Time Entry</h2>
+              <div class="form-group">
+                <label for="user_id">Bruker Id</label>
+                <input type="number" id="user_id" name="user_id" th:value="${id}" required readonly>
+              </div>
+              <div class="form-group">
+                <label for="start_time">Start tid</label>
+                <input type="datetime-local" id="start_time" name="startTime"required>
+              </div>
+              <div class="form-group">
+                <label for="end_time">Slutt tid</label>
+                <input type="datetime-local" id="end_time" name="endTime" onchange="calculateDuration()" required>
+              </div>
+              <div class="form-group">
+                <label for="duration">Varighet (Timer)</label>
+                <input type="number" id="duration" name="duration" readonly required>
+              </div>
+              <button type="submit">Lagre</button>
+            </form>
+          </div>
+    </body>
+
+</html>
