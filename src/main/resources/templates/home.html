@@ -14,7 +14,8 @@
     <ul>
         <li>
             <a href="" class="logo">
-                <img alt="../static/media/man.png" th:href="@{/media/man.png}">
+                <img alt="Image" th:src="@{'/profile-pictures/' + ${userId} + .png}">
+               <!-- <img th:src="@{'/static/profile-pictures/' + ${userId} + '.png'}" alt="User Image"> -->
                 <span class="nav-item">Hei<span th:text="${username}"></span></span>
             </a>
         </li>

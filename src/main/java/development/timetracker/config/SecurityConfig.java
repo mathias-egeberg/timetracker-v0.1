@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .csrf(csrf->csrf.disable())
                 .authorizeRequests()
                 .requestMatchers("/").permitAll()
-                .requestMatchers("/h2-console/**", "/static/styles/**").permitAll()
+                .requestMatchers("/static/styles/**", "/static/profile-pictures/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .headers(headers ->

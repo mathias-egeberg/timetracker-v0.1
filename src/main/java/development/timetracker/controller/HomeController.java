@@ -5,9 +5,16 @@ import development.timetracker.entities.TimeEntry;
 import development.timetracker.entities.User;
 import development.timetracker.repositories.EntryRepository;
 import development.timetracker.repositories.UserRepository;
+import development.timetracker.services.CustomUserDetailsService;
 import development.timetracker.services.TimeEntityService;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.ui.Model;
 import development.timetracker.services.CustomUserDetails;
 import org.springframework.security.core.Authentication;
@@ -15,6 +22,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -30,6 +40,8 @@ public class HomeController {
     private TimeEntityService timeEntityService;
 
 
+
+
     @GetMapping
     public String homePage(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -43,13 +55,13 @@ public class HomeController {
         double monthlySummary = timeEntityService.getTotalHoursByMonth(userId, year, month);
         double dailySummary = timeEntityService.getTotalHoursByDay(userId, year, month, day);
 
-
         // Pass the username to the view
         model.addAttribute("username", userDetails.getFirstname());
         model.addAttribute("role", userDetails.getAuthorities());
         model.addAttribute("yearlySummary", yearlySummary);
         model.addAttribute("monthlySummary", monthlySummary);
         model.addAttribute("dailySummary", dailySummary);
+        model.addAttribute("userId", userDetails.getId());
         return "home";
     }
 
@@ -84,6 +96,7 @@ public class HomeController {
             return "redirect:/home/new-entry"; // Redirect back to form page
         }
     }
+
 
 
 }

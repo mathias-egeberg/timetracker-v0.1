@@ -37,9 +37,11 @@ public class User implements Serializable {
     @Column
     private String role;
 
+    @Column
+    private String profilePicturePath;
 
 
-    public User(int id, String username, String email, String password, String first_name, String last_name, String role) {
+    public User(int id, String username, String email, String password, String first_name, String last_name, String role, String profilePicturePath) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -47,6 +49,7 @@ public class User implements Serializable {
         this.first_name = first_name;
         this.last_name = last_name;
         this.role = role;
+        this.profilePicturePath = profilePicturePath;
     }
 
 
