@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Calendar</title>
+
+    <link rel="stylesheet" href="../static/styles/calendar-nav.css" th:href="@{/styles/calendar-nav.css}">
+    <link rel="stylesheet" href="../static/styles/calendar.css" th:href="@{/styles/calendar.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <meta name="userId" th:content="${userId}">
+
+    <script th:src="@{/scripts/calendar.js}" defer></script>
+</head>
+    <body>
+    <nav>
+        <ul>
+            <li>
+                <a href="" class="logo">
+                    <img alt="Image" th:src="@{'/profile-pictures/' + ${userId} + .png}">
+                    <span class="nav-item">Hei<span th:text="${username}"></span></span>
+                </a>
+            </li>
+            <li><a href="/home">
+                <i class="fas fa-home"></i>
+                <span class="nav-item">Hjem</span>
+            </a></li>
+            <li><a href="/home/new-entry">
+                <i class="fas fa-chart-bar"></i>
+                <span class="nav-item">Ny timeføring</span>
+            </a></li>
+            <li><a href="/home/calendar">
+                <i class="fas fa-calendar"></i>
+                <span class="nav-item">Endre timeføring</span>
+            </a></li>
+            <li><a href="#">
+                <i class="fas fa-user"></i>
+                <span class="nav-item">Tom</span>
+            </a></li>
+            <li th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
+                <a href="/home/settings">
+                    <i class="fas fa-cog"></i>
+                    <span class="nav-item">Settings</span>
+                </a></li>
+            <li><a href="/logout" class="logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="nav-item">Logg ut</span>
+            </a></li>
+        </ul>
+    </nav>
+
+
+    <div class="container">
+        <div class="calendar">
+            <div class="header">
+                <div class="month"></div>
+                <div class="btns">
+                    <div class="btn today-btn">
+                        <i class="fas fa-calendar-day"></i>
+                    </div>
+                    <div class="btn prev-btn">
+                        <i class="fas fa-chevron-left"></i>
+                    </div>
+                    <div class="btn next-btn">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="weekdays">
+                <div class="day">Man</div>
+                <div class="day">Tir</div>
+                <div class="day">Ons</div>
+                <div class="day">Tor</div>
+                <div class="day">Fre</div>
+                <div class="day">Lør</div>
+                <div class="day">Søn</div>
+            </div>
+            <div class="days"></div>
+        </div>
+    </div>
+
+
+    </body>
+</html>

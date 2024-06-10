@@ -12,6 +12,13 @@
 
 body{
     background: #073b4c;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 nav{
@@ -81,61 +88,81 @@ nav:hover{
     bottom: 0;
 }
 
+
 .container {
-    padding-top: 3%;
-    display: grid;
-    grid-template-columns: repeat(3, auto); /* Three columns */
-    grid-template-rows: auto auto; /* Two rows */
-    gap: 20px; /* Space between the boxes */
-    justify-content: center; /* Center the grid within the container */
+    display: flex;
+    gap: 20px;
 }
 
-.header {
-    grid-column: 1 / -1; /* Span all columns */
-    background-color: #f0f0f0;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: center;
-    margin-bottom: 5px;
-}
-
-.box {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: center;
-    width: 200px;
-    height: 150px;
+.form-wrapper {
+    background-color: #0f3460;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    padding: 40px;
+    width: 400px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
 }
 
-.box h2 {
-    margin: 0;
-    font-size: 1.2em;
-    color: #333;
+h2 {
+    margin-bottom: 20px;
 }
 
-.box p {
-    margin: 10px 0 0 0;
-    font-size: 2em;
-    color: #555;
+.input-group {
+    margin-bottom: 15px;
+    width: 100%;
 }
 
-.spacer {
-    grid-column: 1 / -1; /* Span all columns */
-    height: 40px; /* Adjust this value for the desired space */
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
 }
 
-canvas {
-    margin-top: 20px;
-}
-
-button {
-    margin: 10px;
-    padding: 10px 20px;
+.input-group input,
+.input-group select {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
     font-size: 16px;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    outline: none;
+    box-shadow: 0 0 5px #00d4ff;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #00d4ff;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #00a3cc;
+}
+
+.submit-button:active {
+    transform: scale(0.98);
+}
+
+@keyframes button-press {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.98);
+    }
+    100% {
+        transform: scale(1);
+    }
 }

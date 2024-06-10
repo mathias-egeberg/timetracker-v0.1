@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="../static/styles/home.css" th:href="@{/styles/home.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="shortcut icon"  href="../static/media/favicon.ico" th:href="@{/media/favicon.ico}"type="image/x-icon">
-    <script th:src="@{/scripts/barchart.js}" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 <body>
@@ -28,7 +26,7 @@
             <i class="fas fa-chart-bar"></i>
             <span class="nav-item">Ny timeføring</span>
         </a></li>
-        <li><a href="/home/calendar">
+        <li><a href="#">
             <i class="fas fa-calendar"></i>
             <span class="nav-item">Endre timeføring</span>
         </a></li>
@@ -49,38 +47,17 @@
 </nav>
 
 <div class="container">
-    <div class="header" colspan="3">
-        <h2>Ordinær tid:</h2>
-    </div>
     <div class="box">
-        <h2>I år</h2>
-        <p id="yearlySummary" th:text="${yearlySummary} + ' t'"></p>
+        <h2>Registrer ny bruker</h2>
+        <p></p>
     </div>
     <div class="box">
         <h2>Denne måneden</h2>
-        <p id="monthlySummary" th:text="${monthlySummary} + ' t'"></p>
+        <p></p>
     </div>
     <div class="box">
         <h2>I dag</h2>
-        <p id="dailySummary" th:text="${dailySummary} + ' t'"></p>
-    </div>
-
-    <div class="spacer"></div>
-
-    <<div class="header" colspan="3">
-    <h2>Overtid:</h2>
-    </div>
-    <div class="box">
-        <h2>I år</h2>
-        <p id="overtimeYearly" th:text="${overtimeYearly} + ' t'"></p>
-    </div>
-    <div class="box">
-        <h2>Denne måneden</h2>
-        <p id="overtimeMonthly" th:text="${overtimeMonthly} + ' t'"></p>
-    </div>
-    <div class="box">
-        <h2>I dag</h2>
-        <p id="overtimeDaily" th:text="${overtimeDaily} + ' t'"></p>
+        <p></p>
     </div>
 </div>
 

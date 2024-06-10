@@ -34,6 +34,9 @@ public class TimeEntry implements Serializable {
     @Column(name = "duration")
     private double duration;
 
+    @Column(name = "overtime")
+    private double overtime;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
@@ -42,12 +45,13 @@ public class TimeEntry implements Serializable {
 
 
 
-    public TimeEntry(int time_entry_id, int user_id, LocalDateTime start_time, LocalDateTime end_time, double duration, LocalDateTime created_at, LocalDateTime updated_at) {
+    public TimeEntry(int time_entry_id, int user_id, LocalDateTime start_time, LocalDateTime end_time, double duration, double overtime, LocalDateTime created_at, LocalDateTime updated_at) {
         this.id = time_entry_id;
         this.userId = user_id;
         this.startTime = start_time;
         this.endTime = end_time;
         this.duration = duration;
+        this.overtime = overtime;
         this.createdAt = created_at;
         this.updatedAt = updated_at;
     }

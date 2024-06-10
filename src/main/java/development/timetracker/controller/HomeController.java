@@ -4,17 +4,10 @@ package development.timetracker.controller;
 import development.timetracker.entities.TimeEntry;
 import development.timetracker.entities.User;
 import development.timetracker.repositories.EntryRepository;
-import development.timetracker.repositories.UserRepository;
-import development.timetracker.services.CustomUserDetailsService;
 import development.timetracker.services.TimeEntityService;
-import jakarta.annotation.Resource;
+import development.timetracker.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.io.UrlResource;
-import org.springframework.data.crossstore.ChangeSetPersister;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.ui.Model;
 import development.timetracker.services.CustomUserDetails;
 import org.springframework.security.core.Authentication;
@@ -22,11 +15,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.MalformedURLException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
 
 
 @Controller
@@ -35,6 +27,9 @@ public class HomeController {
 
     @Autowired
     private EntryRepository entryRepo;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private TimeEntityService timeEntityService;
@@ -54,6 +49,9 @@ public class HomeController {
         double yearlySummary = timeEntityService.getTotalHoursByYear(userId,year);
         double monthlySummary = timeEntityService.getTotalHoursByMonth(userId, year, month);
         double dailySummary = timeEntityService.getTotalHoursByDay(userId, year, month, day);
+        double overtimeYearly = timeEntityService.findTotalOvertimeHoursByYear(userId, year);
+        double overtimeMonthly = timeEntityService.findTotalOvertimeHoursByMonth(userId, year, month);
+        double overtimeDaily = timeEntityService.findTotalOvertimeHoursByDay(userId, year, month, day);
 
         // Pass the username to the view
         model.addAttribute("username", userDetails.getFirstname());
@@ -61,6 +59,9 @@ public class HomeController {
         model.addAttribute("yearlySummary", yearlySummary);
         model.addAttribute("monthlySummary", monthlySummary);
         model.addAttribute("dailySummary", dailySummary);
+        model.addAttribute("overtimeYearly", overtimeYearly);
+        model.addAttribute("overtimeMonthly", overtimeMonthly);
+        model.addAttribute("overtimeDaily", overtimeDaily);
         model.addAttribute("userId", userDetails.getId());
         return "home";
     }
@@ -71,7 +72,8 @@ public class HomeController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
-        model.addAttribute("id", userDetails.getId());
+        model.addAttribute("userId", userDetails.getId());
+        model.addAttribute("username", userDetails.getFirstname());
 
         return "new-entry";
     }
@@ -97,6 +99,46 @@ public class HomeController {
         }
     }
 
+    @GetMapping("/new-user")
+    public String newUserPage(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
+        model.addAttribute("username", userDetails.getFirstname());
+        model.addAttribute("role", userDetails.getAuthorities());
+        model.addAttribute("userId", userDetails.getId());
+        return "new-user";
+    }
+
+
+    @PostMapping("/saveuser")
+    public String registerUser(@ModelAttribute("user")User user){
+        userService.saveUser(user);
+        return "redirect:/home";
+    }
+
+    @GetMapping("/settings")
+    public String settingsPage(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+
+        model.addAttribute("username", userDetails.getFirstname());
+        model.addAttribute("role", userDetails.getAuthorities());
+        model.addAttribute("userId", userDetails.getId());
+        return "settings";
+    }
+
+
+    @GetMapping("/time-entries/week")
+    public List<TimeEntry> getTimeEntriesForWeek(
+            @RequestParam int userId,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate) {
+
+        LocalDate endDate = startDate.plusDays(6);
+        LocalDateTime startDateTime = startDate.atStartOfDay();
+        LocalDateTime endDateTime = endDate.atTime(LocalTime.MAX);
+
+        return entryRepo.findByUserIdAndStartTimeBetween(userId, startDateTime, endDateTime);
+    }
 
 }

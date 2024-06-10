@@ -22,5 +22,16 @@ public class TimeEntityService {
         return entryRepository.findTotalHoursByDay(userId, year, month, day);
     }
 
+    public double findTotalOvertimeHoursByYear(int userId, int year) {
+        return entryRepository.findTotalOvertimeHoursByYear(userId, year);
+    }
+
+    public double findTotalOvertimeHoursByMonth(int userId, int year, int month) {
+        return entryRepository.findTotalOvertimeHoursByMonth(userId, year, month);
+    }
+
+    public double findTotalOvertimeHoursByDay(int userId, int year, int month, int day) {
+        return entryRepository.findTotalOvertimeHoursByDay(userId, year, month, day);
+    }
 
 }
