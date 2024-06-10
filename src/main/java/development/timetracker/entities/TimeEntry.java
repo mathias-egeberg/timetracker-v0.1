@@ -35,7 +35,7 @@ public class TimeEntry implements Serializable {
     private double duration;
 
     @Column(name = "overtime")
-    private double overtime;
+    private Double overtime;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

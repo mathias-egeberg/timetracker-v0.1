@@ -34,6 +34,7 @@ public class CalendarController {
     private EntryRepository timeEntryRepository;
 
 
+
     @GetMapping
     public String calendar(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
